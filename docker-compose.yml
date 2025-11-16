@@ -1,0 +1,32 @@
+services:
+  backend:
+    container_name: analytics-backend
+    build: .
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    environment:
+      PORT: 8000
+
+      # Override redis only for docker
+      REDIS_URL: redis://redis:6379
+
+      API_KEY_SECRET: ${API_KEY_SECRET}
+      MONGODB_URI: ${MONGODB_URI}
+      DB_NAME: ${DB_NAME}
+    depends_on:
+      - redis
+    restart: always
+
+  redis:
+    container_name: analytics-redis
+    image: redis:7-alpine
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+
+volumes:
+  redis_data:
