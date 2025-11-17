@@ -1,9 +1,17 @@
 import Redis from "ioredis";
+import dotenv from "dotenv";
 
-const redis = new Redis(process.env.REDIS_URL);
+dotenv.config(); // Only affects local dev & tests
+
+const redisUrl = process.env.REDIS_URL;
+
+const redis = new Redis(redisUrl, {
+  maxRetriesPerRequest: null, // avoid crashes on slow networks
+  enableReadyCheck: false,
+});
 
 redis.on("connect", () => {
-  console.log("✅ Redis connected");
+  console.log(`✅ Redis connected → ${redisUrl}`);
 });
 
 redis.on("error", (err) => {
