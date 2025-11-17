@@ -231,3 +231,12 @@ Expected output:
 
 Test Suites: 8 passed, 8 total
 Tests:       14 passed, 14 total
+
+📸 Screenshots
+<hr />
+🐳 Docker Setup
+<p align="center"> <img src="screenshots/docker-screenshot.png" alt="Docker setup screenshot" width="700" /> </p>
+🧪 Jest Test Results
+<p align="center"> <img src="screenshots/jest-test.png" alt="Jest test screenshot" width="700" /> </p>
+📑 Swagger API Docs
+<p align="center"> <img src="screenshots/swagger-screenshot.png" alt="Swagger UI screenshot" width="700" /> </p>
