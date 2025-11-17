@@ -3,12 +3,16 @@ import RedisStore from "rate-limit-redis";
 import redis from "../config/redis.js";
 
 const isTest = process.env.NODE_ENV === "test";
+const isRender = process.env.RENDER === "true"; // 👈 Add this env on Render
 
-// 🟢 In test mode: we MUST enforce low limits so tests can trigger 429
+// 🟢 Only use Redis if NOT test & NOT Render
+const useRedis = !isTest && !isRender;
+
+// 🟢 Test mode: low limits for testing
 const TEST_LIMIT = 100;
 
 const getStore = () => {
-  if (isTest) return undefined; // Use in-memory store in tests
+  if (!useRedis) return undefined; // fallback to memory
   return new RedisStore({
     sendCommand: (command) => redis.call(command[0], ...command.slice(1)),
   });
